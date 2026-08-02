@@ -51,5 +51,18 @@ export const spacing = {
 } as const;
 
 export const typography = {
-
+  body: { 
+    fontFamily: 'Literata_400Regular', 
+    fontSize: 16, 
+    lineHeight: 24 
+  },
+  label: { 
+    fontFamily: 'Literata_600SemiBold', 
+    fontSize: 13 
+  },
+  result: { 
+    fontFamily: 
+    'IBMPlexMono_500Medium', 
+    fontSize: 32 
+  },
 } as const;
