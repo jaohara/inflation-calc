@@ -51,6 +51,11 @@ export const spacing = {
 } as const;
 
 export const typography = {
+  header: { 
+    fontFamily: 'Literata_600SemiBold', 
+    fontSize: 24, 
+    lineHeight: 32
+  },
   body: { 
     fontFamily: 'Literata_400Regular', 
     fontSize: 16, 
