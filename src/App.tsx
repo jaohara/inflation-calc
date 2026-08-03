@@ -1,20 +1,39 @@
+import { useState } from 'react';
+
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { useFonts } from 'expo-font';
 import { IBMPlexMono_500Medium } from '@expo-google-fonts/ibm-plex-mono';
 import { Literata_400Regular, Literata_600SemiBold } from '@expo-google-fonts/literata';
 
-import HeaderText from '@/components/HeaderText';
-import BodyText from '@/components/BodyText';
+import HeaderText from '@/src/components/HeaderText';
+import BodyText from '@/src/components/BodyText';
+import YearSelector from './components/YearSelector';
+import AmountInput from './components/AmountInput';
 
 // TODO: Change color import when light/dark theming is working
 import {
+  common,
   lightColors,
   spacing,
+  typography,
 } from '@/src/theme/theme';
 
+import {
+  MIN_INFLATION_YEAR,
+  MAX_INFLATION_YEAR,
+} from '@/src/constants';
+
+// Should this be set here, be random, or use the last remembered one?
+const DEFAULT_YEAR = 1962;
+
 export default function App() {
+  const [ startYear, setStartYear ] = useState(String(DEFAULT_YEAR));
+  const [ endYear, setEndYear ] = useState(String(MAX_INFLATION_YEAR));
+  const [ amount, setAmount ] = useState("1.0");
+
   const [ loaded, error ] = useFonts({
     IBMPlexMono_500Medium,
     Literata_400Regular,
@@ -32,22 +51,38 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <HeaderText>
-        Inflation Calculator
-      </HeaderText>
-      <BodyText>
-        This is a simple application designed to convert monetary values from the past into present-day values.
-      </BodyText>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <HeaderText>
+          Inflation Calculator
+        </HeaderText>
 
-      <BodyText>
-        It is meant to be used when reading or watching something, either fiction or non-fiction,
-        that takes place in the last hundred years and references an amount
-        of money. Use this to quickly get a reference of what that value would
-        amount to today.
-      </BodyText>
-      <StatusBar style="auto" />
-    </View>
+        <View style={[styles.inputContainer, styles.amountInputContainer]}>
+          <AmountInput 
+            value={amount}
+            setValue={setAmount}
+          />
+        </View>
+
+        <View style={[styles.inputContainer, styles.yearInputsContainer]}>
+          <YearSelector
+            min={MIN_INFLATION_YEAR}
+            max={MAX_INFLATION_YEAR}
+            value={startYear}
+            setValue={setStartYear}
+          />
+          {/* TODO: Use arrow icon instead of "to:" */}
+          <Text style={styles.yearInputsContainerLabel}>to:</Text>
+          <YearSelector
+            min={MIN_INFLATION_YEAR}
+            max={MAX_INFLATION_YEAR}
+            value={endYear}
+            setValue={setEndYear}
+          />
+        </View>
+        <StatusBar style="auto" />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -58,7 +93,28 @@ const styles = StyleSheet.create({
     backgroundColor: lightColors.background,
     // alignItems: 'center',
     // justifyContent: 'center',
-    padding: spacing.md,
-    paddingTop: spacing.xl,
+    padding: common.padding,
+    // paddingTop: spacing.xl,
   },
+  inputContainer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: spacing.sm,
+    marginTop: spacing.sm,
+  },
+  amountInputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between'
+  },
+  yearInputsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  yearInputsContainerLabel: {
+    ...typography.label,
+    color: lightColors.accent,
+  }
 });

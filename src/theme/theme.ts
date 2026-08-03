@@ -22,10 +22,36 @@ const palette = {
   iron990: '#0E110E',
 } as const;
 
+const semantic = {
+  // Error — terracotta, hue 8°
+  errorSurface: '#FAE8E5',
+  errorBorder:  '#EDBDB6',
+  errorSolid:   '#A14436',
+  errorOnDark:  '#E09185',
+  errorSurfaceDark: '#3E221E',
+
+  // Warning — ochre, hue 38°
+  warnSurface: '#FBF1DF',
+  warnBorder:  '#EED1A0',
+  warnSolid:   '#89601A',
+  warnOnDark:  '#E7BD74',
+  warnSurfaceDark: '#3D301A',
+
+  // Info — muted blue, hue 205°
+  infoSurface: '#E6F1FA',
+  infoBorder:  '#B0D1E8',
+  infoSolid:   '#29648E',
+  infoOnDark:  '#88BADD',
+  infoSurfaceDark: '#1E313E',
+} as const;
+
 export const lightColors = {
   accent: palette.fern,
   background: palette.mint100,
   border: palette.mint400,
+  errorBorder: semantic.errorBorder,
+  errorSurface: semantic.errorSurface,
+  errorSolid: semantic.errorSolid,
   surface: palette.mint50,
   textPrimary: palette.iron800,
   textSecondary: palette.iron600,
@@ -37,6 +63,9 @@ export const darkColors: ColorScheme = {
   accent: palette.celadon,
   background: palette.iron975,
   border: palette.iron800,
+  errorBorder: semantic.errorBorder,
+  errorSurface: semantic.errorSurfaceDark,
+  errorSolid: semantic.errorSolid,
   surface: palette.iron950,
   textPrimary: palette.mint100,
   textSecondary: palette.iron400,
@@ -65,9 +94,25 @@ export const typography = {
     fontFamily: 'Literata_600SemiBold', 
     fontSize: 13 
   },
+  input: {
+    fontFamily: 'IBMPlexMono_500Medium',
+    fontSize: 24,
+  },
   result: { 
     fontFamily: 
     'IBMPlexMono_500Medium', 
     fontSize: 32 
   },
 } as const;
+
+export const common = {
+  borderRadius: spacing.md,
+  padding: spacing.lg,
+  inputPadding: {
+    paddingTop: spacing.sm,
+    paddingLeft: spacing.md,
+    paddingRight: spacing.md,
+    paddingBottom: spacing.sm,
+  },
+} as const;
+
