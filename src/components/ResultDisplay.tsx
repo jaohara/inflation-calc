@@ -22,14 +22,20 @@ import { convert } from '@/lib/inflation';
 
 type Props = {
   amount: string,
+  amountHasError: boolean,
   startYear: string,
+  startYearHasError: boolean,
   endYear: string,
+  endYearHasError: boolean,
 };
 
 export default function ResultDisplay({ 
   amount,
+  amountHasError,
   startYear,
+  startYearHasError,
   endYear,
+  endYearHasError,
 }: Props) {
   const result = (() => {
     // TODO: Use the ratio of inflation to compute the value between the two years 
@@ -38,12 +44,18 @@ export default function ResultDisplay({
     return String(convertedValue.toFixed(2));
   })();
 
+  const hasError = amountHasError || startYearHasError || endYearHasError;
 
+  const resultBody = (() => {
+    if (!hasError) {
+      return (<>${result}</>);
+    }
+  })()
 
   return (
     <View style={styles.container}>
       <Text style={styles.resultText}>
-        ${result}
+        {resultBody}
       </Text>
     </View>
   )
@@ -54,6 +66,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: lightColors.surface,
     borderRadius: common.borderRadius,
+    borderWidth: common.borderWidth,
     flexDirection: 'row',
     justifyContent: 'center',
     padding: spacing.lg,

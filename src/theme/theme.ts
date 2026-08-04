@@ -106,6 +106,7 @@ export const typography = {
 } as const;
 
 export const common = {
+  borderWidth: 2,
   borderRadius: spacing.md,
   padding: spacing.lg,
   inputPadding: {

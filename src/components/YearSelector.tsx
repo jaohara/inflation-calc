@@ -109,9 +109,9 @@ export default function YearSelector({
 
 const styles = StyleSheet.create({
   yearInput: {
-    borderRadius: common.borderRadius,
-    borderWidth: 2,
     borderColor: lightColors.surface,
+    borderRadius: common.borderRadius,
+    borderWidth: common.borderWidth,
     backgroundColor: lightColors.surface,
     color: lightColors.textPrimary,
     ...typography.input,

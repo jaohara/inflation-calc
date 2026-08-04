@@ -95,7 +95,7 @@ export default function AmountInput({
 const styles = StyleSheet.create({
   amountInput: {
     borderRadius: common.borderRadius,
-    borderWidth: 2,
+    borderWidth: common.borderWidth,
     borderColor: lightColors.surface,
     backgroundColor: lightColors.surface,
     color: lightColors.textPrimary,

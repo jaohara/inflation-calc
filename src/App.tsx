@@ -68,7 +68,7 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <HeaderText>
-          Inflation Calculator
+          Input
         </HeaderText>
 
         <View style={[styles.inputContainer, styles.amountInputContainer]}>
@@ -92,9 +92,9 @@ export default function App() {
             setHasError={setStartYearInputHasError}
             setValue={setStartYear}
           />
-          {/* TODO: Use arrow icon instead of "to:" */}
-          {/* <Text style={styles.yearInputsContainerLabel}>to:</Text> */}
+
           <AppIcon name="arrow-right" />
+
           <YearSelector
             hasError={endYearInputHasError}
             min={MIN_INFLATION_YEAR}
@@ -108,8 +108,11 @@ export default function App() {
         <View>
           <ResultDisplay
             amount={amount}
+            amountHasError={amountInputHasError}
             startYear={startYear}
+            startYearHasError={startYearInputHasError}
             endYear={endYear}
+            endYearHasError={endYearInputHasError}
           />
         </View>
         <StatusBar style="auto" />
