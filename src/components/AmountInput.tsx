@@ -21,6 +21,8 @@ import {
 } from "@/src/theme/theme.ts";
 
 type Props = {
+  hasError: boolean;
+  setHasError: (hasError: boolean) => void;
   value: string;
   setValue: (value: string) => void;
 };
@@ -29,11 +31,13 @@ type Props = {
 //  UI elemennt.
 
 export default function AmountInput({
-  value,
+  hasError,
+  setHasError,
   setValue,
+  value,
 }: Props) {
   const [ isFocused, setIsFocused ] = useState(false);
-  const [ hasError, setHasError ] = useState(false);
+  // const [ hasError, setHasError ] = useState(false);
   const [ previousValue, setPreviousValue ] = useState(value);
 
   // TODO: RETURN TO THIS

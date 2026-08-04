@@ -43,6 +43,11 @@ export default function App() {
   const [ endYear, setEndYear ] = useState(String(MAX_INFLATION_YEAR));
   const [ amount, setAmount ] = useState("1.00");
 
+  // error state for inputs
+  const [ startYearInputHasError, setStartYearInputHasError ] = useState(false);
+  const [ endYearInputError, setEndYearInputHasError ] = useState(false);
+  const [ amountInputHasError, setAmountInputHasError ] = useState(false);
+  
   const [ loaded, error ] = useFonts({
     IBMPlexMono_500Medium,
     Literata_400Regular,
@@ -69,8 +74,10 @@ export default function App() {
         <View style={[styles.inputContainer, styles.amountInputContainer]}>
           <AppIcon name="dollar-sign" />
           <AmountInput 
-            value={amount}
+            hasError={amountInputHasError}
+            setHasError={setAmountInputHasError}
             setValue={setAmount}
+            value={amount}
           />
         </View>
 

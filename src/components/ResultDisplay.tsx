@@ -38,6 +38,8 @@ export default function ResultDisplay({
     return String(convertedValue.toFixed(2));
   })();
 
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.resultText}>
