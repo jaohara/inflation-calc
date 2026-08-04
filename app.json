@@ -21,7 +21,8 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.jaohara.inflationcalc"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +30,11 @@
     "plugins": [
       "expo-font",
       "@react-native-vector-icons/fontawesome6"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "788106cd-00dc-40a0-a7b8-85c370875528"
+      }
+    }
   }
 }
