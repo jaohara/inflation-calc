@@ -45,7 +45,7 @@ export default function App() {
 
   // error state for inputs
   const [ startYearInputHasError, setStartYearInputHasError ] = useState(false);
-  const [ endYearInputError, setEndYearInputHasError ] = useState(false);
+  const [ endYearInputHasError, setEndYearInputHasError ] = useState(false);
   const [ amountInputHasError, setAmountInputHasError ] = useState(false);
   
   const [ loaded, error ] = useFonts({
@@ -85,18 +85,22 @@ export default function App() {
           <AppIcon name="calendar-days" />
 
           <YearSelector
+            hasError={startYearInputHasError}
             min={MIN_INFLATION_YEAR}
             max={MAX_INFLATION_YEAR}
             value={startYear}
+            setHasError={setStartYearInputHasError}
             setValue={setStartYear}
           />
           {/* TODO: Use arrow icon instead of "to:" */}
           {/* <Text style={styles.yearInputsContainerLabel}>to:</Text> */}
           <AppIcon name="arrow-right" />
           <YearSelector
+            hasError={endYearInputHasError}
             min={MIN_INFLATION_YEAR}
             max={MAX_INFLATION_YEAR}
             value={endYear}
+            setHasError={setEndYearInputHasError}
             setValue={setEndYear}
           />
         </View>
