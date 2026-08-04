@@ -18,6 +18,8 @@ import {
   typography,
 } from '@/src/theme/theme.ts';
 
+import { convert } from '@/lib/inflation';
+
 type Props = {
   amount: string,
   startYear: string,
@@ -31,12 +33,9 @@ export default function ResultDisplay({
 }: Props) {
   const result = (() => {
     // TODO: Use the ratio of inflation to compute the value between the two years 
-    const parsedValue = parseFloat(amount);
+    const convertedValue = convert(amount, startYear, endYear);
 
-    return String((parsedValue * 10.0).toFixed(2));
-
-
-    return parsedValue;
+    return String(convertedValue.toFixed(2));
   })();
 
   return (
