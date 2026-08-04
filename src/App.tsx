@@ -8,6 +8,7 @@ import { useFonts } from 'expo-font';
 import { IBMPlexMono_500Medium } from '@expo-google-fonts/ibm-plex-mono';
 import { Literata_400Regular, Literata_600SemiBold } from '@expo-google-fonts/literata';
 
+import cpiData from '@/data/cpi.json';
 
 import HeaderText from '@/src/components/HeaderText';
 import AppIcon from './components/AppIcon';
@@ -24,13 +25,18 @@ import {
 } from '@/src/theme/theme';
 
 import {
-  MIN_INFLATION_YEAR,
-  MAX_INFLATION_YEAR,
+  // MIN_INFLATION_YEAR,
+  // MAX_INFLATION_YEAR,
 } from '@/src/constants';
 import ResultDisplay from './components/ResultDisplay';
 
 // Should this be set here, be random, or use the last remembered one?
 const DEFAULT_YEAR = 1962;
+
+const YEAR_RANGE = [...Object.keys(cpiData.values)];
+const MIN_INFLATION_YEAR = parseInt(YEAR_RANGE[0]);
+const MAX_INFLATION_YEAR = parseInt(YEAR_RANGE[YEAR_RANGE.length - 1]);
+
 
 export default function App() {
   const [ startYear, setStartYear ] = useState(String(DEFAULT_YEAR));
