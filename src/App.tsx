@@ -8,7 +8,9 @@ import { useFonts } from 'expo-font';
 import { IBMPlexMono_500Medium } from '@expo-google-fonts/ibm-plex-mono';
 import { Literata_400Regular, Literata_600SemiBold } from '@expo-google-fonts/literata';
 
+
 import HeaderText from '@/src/components/HeaderText';
+import AppIcon from './components/AppIcon';
 import BodyText from '@/src/components/BodyText';
 import YearSelector from './components/YearSelector';
 import AmountInput from './components/AmountInput';
@@ -25,6 +27,7 @@ import {
   MIN_INFLATION_YEAR,
   MAX_INFLATION_YEAR,
 } from '@/src/constants';
+import ResultDisplay from './components/ResultDisplay';
 
 // Should this be set here, be random, or use the last remembered one?
 const DEFAULT_YEAR = 1962;
@@ -32,7 +35,7 @@ const DEFAULT_YEAR = 1962;
 export default function App() {
   const [ startYear, setStartYear ] = useState(String(DEFAULT_YEAR));
   const [ endYear, setEndYear ] = useState(String(MAX_INFLATION_YEAR));
-  const [ amount, setAmount ] = useState("1.0");
+  const [ amount, setAmount ] = useState("1.00");
 
   const [ loaded, error ] = useFonts({
     IBMPlexMono_500Medium,
@@ -58,6 +61,7 @@ export default function App() {
         </HeaderText>
 
         <View style={[styles.inputContainer, styles.amountInputContainer]}>
+          <AppIcon name="dollar-sign" />
           <AmountInput 
             value={amount}
             setValue={setAmount}
@@ -65,6 +69,8 @@ export default function App() {
         </View>
 
         <View style={[styles.inputContainer, styles.yearInputsContainer]}>
+          <AppIcon name="calendar-days" />
+
           <YearSelector
             min={MIN_INFLATION_YEAR}
             max={MAX_INFLATION_YEAR}
@@ -72,12 +78,21 @@ export default function App() {
             setValue={setStartYear}
           />
           {/* TODO: Use arrow icon instead of "to:" */}
-          <Text style={styles.yearInputsContainerLabel}>to:</Text>
+          {/* <Text style={styles.yearInputsContainerLabel}>to:</Text> */}
+          <AppIcon name="arrow-right" />
           <YearSelector
             min={MIN_INFLATION_YEAR}
             max={MAX_INFLATION_YEAR}
             value={endYear}
             setValue={setEndYear}
+          />
+        </View>
+
+        <View>
+          <ResultDisplay
+            amount={amount}
+            startYear={startYear}
+            endYear={endYear}
           />
         </View>
         <StatusBar style="auto" />

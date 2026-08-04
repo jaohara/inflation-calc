@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     ...typography.input,
     ...common.inputPadding,
     textAlign: 'center',
-    width: '100%',
+    width: '90%',
   },
   amountInputFocused: {
     borderColor: lightColors.accent,

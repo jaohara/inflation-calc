@@ -19,14 +19,30 @@ import {
 } from '@/src/theme/theme.ts';
 
 type Props = {
-  value: number,
+  amount: string,
+  startYear: string,
+  endYear: string,
 };
 
-export default function ResultDisplay({ value }: Props) {
+export default function ResultDisplay({ 
+  amount,
+  startYear,
+  endYear,
+}: Props) {
+  const result = (() => {
+    // TODO: Use the ratio of inflation to compute the value between the two years 
+    const parsedValue = parseFloat(amount);
+
+    return String((parsedValue * 10.0).toFixed(2));
+
+
+    return parsedValue;
+  })();
+
   return (
     <View style={styles.container}>
       <Text style={styles.resultText}>
-        {(value === null) ? 'Loading...' : value}
+        ${result}
       </Text>
     </View>
   )
@@ -35,12 +51,15 @@ export default function ResultDisplay({ value }: Props) {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
+    backgroundColor: lightColors.surface,
     borderRadius: common.borderRadius,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    padding: spacing.lg,
   },
   resultText: {
+    textAlign: 'center',
+    color: lightColors.textPrimary,
     ...typography.result,
-    borderRadius: common.borderRadius,
   },
 });
