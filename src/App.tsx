@@ -68,41 +68,46 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <HeaderText>
-          Input
+          Input:
         </HeaderText>
 
         <View style={[styles.inputContainer, styles.amountInputContainer]}>
           <AppIcon name="dollar-sign" />
-          <AmountInput 
-            hasError={amountInputHasError}
-            setHasError={setAmountInputHasError}
-            setValue={setAmount}
-            value={amount}
-          />
+          <View style={styles.inputWrapper}>
+            <AmountInput 
+              hasError={amountInputHasError}
+              setHasError={setAmountInputHasError}
+              setValue={setAmount}
+              value={amount}
+            />
+          </View>
         </View>
 
         <View style={[styles.inputContainer, styles.yearInputsContainer]}>
           <AppIcon name="calendar-days" />
 
-          <YearSelector
-            hasError={startYearInputHasError}
-            min={MIN_INFLATION_YEAR}
-            max={MAX_INFLATION_YEAR}
-            value={startYear}
-            setHasError={setStartYearInputHasError}
-            setValue={setStartYear}
-          />
 
-          <AppIcon name="arrow-right" />
+          <View style={styles.inputWrapper}>
+            <YearSelector
+              hasError={startYearInputHasError}
+              min={MIN_INFLATION_YEAR}
+              max={MAX_INFLATION_YEAR}
+              value={startYear}
+              setHasError={setStartYearInputHasError}
+              setValue={setStartYear}
+            />
 
-          <YearSelector
-            hasError={endYearInputHasError}
-            min={MIN_INFLATION_YEAR}
-            max={MAX_INFLATION_YEAR}
-            value={endYear}
-            setHasError={setEndYearInputHasError}
-            setValue={setEndYear}
-          />
+            <AppIcon name="arrow-right" />
+
+            <YearSelector
+              hasError={endYearInputHasError}
+              min={MIN_INFLATION_YEAR}
+              max={MAX_INFLATION_YEAR}
+              value={endYear}
+              setHasError={setEndYearInputHasError}
+              setValue={setEndYear}
+            />
+          </View>
         </View>
 
         <View>
@@ -135,18 +140,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.sm,
-    marginTop: spacing.sm,
+    marginBottom: common.containerMargin,
+    marginTop: common.containerMargin,
+  },
+  inputWrapper: {
+    ...common.flex,
+    width: '90%',
   },
   amountInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between'
+    ...common.flex,
   },
   yearInputsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
+    ...common.flex,
   },
   yearInputsContainerLabel: {
     ...typography.label,

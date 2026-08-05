@@ -109,7 +109,8 @@ export default function YearSelector({
 
 const styles = StyleSheet.create({
   yearInput: {
-    borderColor: lightColors.surface,
+    // TODO: Make the common input stylings between this and AmountInput some sort of mixin
+    borderColor: lightColors.border,
     borderRadius: common.borderRadius,
     borderWidth: common.borderWidth,
     backgroundColor: lightColors.surface,

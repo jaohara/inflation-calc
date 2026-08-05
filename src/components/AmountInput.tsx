@@ -96,13 +96,13 @@ const styles = StyleSheet.create({
   amountInput: {
     borderRadius: common.borderRadius,
     borderWidth: common.borderWidth,
-    borderColor: lightColors.surface,
+    borderColor: lightColors.border,
     backgroundColor: lightColors.surface,
     color: lightColors.textPrimary,
     ...typography.input,
     ...common.inputPadding,
     textAlign: 'center',
-    width: '90%',
+    width: '100%',
   },
   amountInputFocused: {
     borderColor: lightColors.accent,

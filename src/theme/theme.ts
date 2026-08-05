@@ -52,6 +52,8 @@ export const lightColors = {
   errorBorder: semantic.errorBorder,
   errorSurface: semantic.errorSurface,
   errorSolid: semantic.errorSolid,
+  infoBorder: semantic.infoBorder,
+  infoSurface: semantic.infoSurface,
   surface: palette.mint50,
   textPrimary: palette.iron800,
   textSecondary: palette.iron600,
@@ -66,6 +68,9 @@ export const darkColors: ColorScheme = {
   errorBorder: semantic.errorBorder,
   errorSurface: semantic.errorSurfaceDark,
   errorSolid: semantic.errorSolid,
+  // TODO: Update to use different colors for darkmode
+  infoBorder: semantic.infoBorder,
+  infoSurface: semantic.infoSurface,
   surface: palette.iron950,
   textPrimary: palette.mint100,
   textSecondary: palette.iron400,
@@ -99,8 +104,7 @@ export const typography = {
     fontSize: 24,
   },
   result: { 
-    fontFamily: 
-    'IBMPlexMono_500Medium', 
+    fontFamily: 'IBMPlexMono_500Medium', 
     fontSize: 32 
   },
 } as const;
@@ -108,12 +112,34 @@ export const typography = {
 export const common = {
   borderWidth: 2,
   borderRadius: spacing.md,
+  containerMargin: spacing.md,
+  margin: spacing.sm,
   padding: spacing.lg,
+  inputBorder: {
+
+  },
   inputPadding: {
     paddingTop: spacing.sm,
     paddingLeft: spacing.md,
     paddingRight: spacing.md,
     paddingBottom: spacing.sm,
   },
+  flex: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  }
+} as const;
+
+export const mixins = {
+  inputBorder: {
+  },
+  inputPadding: {
+    paddingTop: spacing.sm,
+    paddingLeft: spacing.md,
+    paddingRight: spacing.md,
+    paddingBottom: spacing.sm,
+  },
+
 } as const;
 
