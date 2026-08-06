@@ -43,6 +43,11 @@ export default function App() {
   const [ endYear, setEndYear ] = useState(String(MAX_INFLATION_YEAR));
   const [ amount, setAmount ] = useState("1.00");
 
+  // error state for inputs
+  const [ startYearInputHasError, setStartYearInputHasError ] = useState(false);
+  const [ endYearInputHasError, setEndYearInputHasError ] = useState(false);
+  const [ amountInputHasError, setAmountInputHasError ] = useState(false);
+  
   const [ loaded, error ] = useFonts({
     IBMPlexMono_500Medium,
     Literata_400Regular,
@@ -63,42 +68,56 @@ export default function App() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <HeaderText>
-          Inflation Calculator
+          Input:
         </HeaderText>
 
         <View style={[styles.inputContainer, styles.amountInputContainer]}>
           <AppIcon name="dollar-sign" />
-          <AmountInput 
-            value={amount}
-            setValue={setAmount}
-          />
+          <View style={styles.inputWrapper}>
+            <AmountInput 
+              hasError={amountInputHasError}
+              setHasError={setAmountInputHasError}
+              setValue={setAmount}
+              value={amount}
+            />
+          </View>
         </View>
 
         <View style={[styles.inputContainer, styles.yearInputsContainer]}>
           <AppIcon name="calendar-days" />
 
-          <YearSelector
-            min={MIN_INFLATION_YEAR}
-            max={MAX_INFLATION_YEAR}
-            value={startYear}
-            setValue={setStartYear}
-          />
-          {/* TODO: Use arrow icon instead of "to:" */}
-          {/* <Text style={styles.yearInputsContainerLabel}>to:</Text> */}
-          <AppIcon name="arrow-right" />
-          <YearSelector
-            min={MIN_INFLATION_YEAR}
-            max={MAX_INFLATION_YEAR}
-            value={endYear}
-            setValue={setEndYear}
-          />
+
+          <View style={styles.inputWrapper}>
+            <YearSelector
+              hasError={startYearInputHasError}
+              min={MIN_INFLATION_YEAR}
+              max={MAX_INFLATION_YEAR}
+              value={startYear}
+              setHasError={setStartYearInputHasError}
+              setValue={setStartYear}
+            />
+
+            <AppIcon name="arrow-right" />
+
+            <YearSelector
+              hasError={endYearInputHasError}
+              min={MIN_INFLATION_YEAR}
+              max={MAX_INFLATION_YEAR}
+              value={endYear}
+              setHasError={setEndYearInputHasError}
+              setValue={setEndYear}
+            />
+          </View>
         </View>
 
         <View>
           <ResultDisplay
             amount={amount}
+            amountHasError={amountInputHasError}
             startYear={startYear}
+            startYearHasError={startYearInputHasError}
             endYear={endYear}
+            endYearHasError={endYearInputHasError}
           />
         </View>
         <StatusBar style="auto" />
@@ -121,18 +140,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: spacing.sm,
-    marginTop: spacing.sm,
+    marginBottom: common.containerMargin,
+    marginTop: common.containerMargin,
+  },
+  inputWrapper: {
+    ...common.flex,
+    width: '90%',
   },
   amountInputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between'
+    ...common.flex,
   },
   yearInputsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
+    ...common.flex,
   },
   yearInputsContainerLabel: {
     ...typography.label,

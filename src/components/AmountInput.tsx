@@ -21,6 +21,8 @@ import {
 } from "@/src/theme/theme.ts";
 
 type Props = {
+  hasError: boolean;
+  setHasError: (hasError: boolean) => void;
   value: string;
   setValue: (value: string) => void;
 };
@@ -29,11 +31,13 @@ type Props = {
 //  UI elemennt.
 
 export default function AmountInput({
-  value,
+  hasError,
+  setHasError,
   setValue,
+  value,
 }: Props) {
   const [ isFocused, setIsFocused ] = useState(false);
-  const [ hasError, setHasError ] = useState(false);
+  // const [ hasError, setHasError ] = useState(false);
   const [ previousValue, setPreviousValue ] = useState(value);
 
   // TODO: RETURN TO THIS
@@ -91,14 +95,14 @@ export default function AmountInput({
 const styles = StyleSheet.create({
   amountInput: {
     borderRadius: common.borderRadius,
-    borderWidth: 2,
-    borderColor: lightColors.surface,
+    borderWidth: common.borderWidth,
+    borderColor: lightColors.border,
     backgroundColor: lightColors.surface,
     color: lightColors.textPrimary,
     ...typography.input,
     ...common.inputPadding,
     textAlign: 'center',
-    width: '90%',
+    width: '100%',
   },
   amountInputFocused: {
     borderColor: lightColors.accent,

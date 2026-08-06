@@ -20,6 +20,8 @@ import {
 } from "@/src/theme/theme.ts";
 
 type Props = {
+  hasError: boolean;
+  setHasError: (hasError: boolean) => void;
   value: string;
   setValue: (value: string) => void;
   min: number;
@@ -30,6 +32,8 @@ type Props = {
 //  UI elemennt.
 
 export default function YearSelector({
+  hasError,
+  setHasError,
   value,
   setValue,
   // TODO: These will come into play with a custom UI implementation for a year picker
@@ -37,7 +41,7 @@ export default function YearSelector({
   max,
 }: Props) {
   const [ isFocused, setIsFocused ] = useState(false);
-  const [ hasError, setHasError ] = useState(false);
+  // const [ hasError, setHasError ] = useState(false);
   const [ previousValue, setPreviousValue ] = useState(value);
 
   // TODO: Rework this - current implementation (text inputs) should have validation at App level,
@@ -105,9 +109,10 @@ export default function YearSelector({
 
 const styles = StyleSheet.create({
   yearInput: {
+    // TODO: Make the common input stylings between this and AmountInput some sort of mixin
+    borderColor: lightColors.border,
     borderRadius: common.borderRadius,
-    borderWidth: 2,
-    borderColor: lightColors.surface,
+    borderWidth: common.borderWidth,
     backgroundColor: lightColors.surface,
     color: lightColors.textPrimary,
     ...typography.input,
