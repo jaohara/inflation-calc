@@ -1,16 +1,11 @@
 // Component to display the formatted result.
-
-/*
-  - Takes a number (or null while loading)
-  - displays loading component while parsing?
-*/
-
 import {
-  ActivityIndicator,
   View, 
   Text, 
   StyleSheet 
 } from 'react-native';
+
+import { LineChart } from 'react-native-gifted-charts';
 
 import { 
   common,
@@ -19,7 +14,11 @@ import {
   typography,
 } from '@/src/theme/theme.ts';
 
-import { convert } from '@/lib/inflation';
+import { 
+  buildLineChartData,
+  convert,
+} from '@/lib/inflation';
+
 import LoadingSpinner from './LoadingSpinner';
 import HeaderText from './HeaderText';
 
@@ -75,6 +74,8 @@ export default function ResultDisplay({
   //  inputs is being used.
   const resultIsLoading = !hasError && isNaN(parseFloat(result));
 
+  const lineChartData = !hasError ? buildLineChartData(amount, startYear, endYear) : null;
+
   return (
     <>
       <HeaderText>Result:</HeaderText>
@@ -89,11 +90,23 @@ export default function ResultDisplay({
         {
           resultIsLoading ? (<LoadingSpinner />) : 
           (
+            // TODO: Make this whole display prettier
+            <>
             <ResultText
               hasError={hasError}
               isInfo={isInfo} 
               message={resultMessage}
             />
+            {
+              lineChartData !== null && (
+                <LineChart
+                  color={lightColors.accent}
+                  dataPointsColor={lightColors.accent}
+                  data={lineChartData}
+                />
+              )
+            }
+            </>
           )
         }
       </View>
@@ -134,7 +147,7 @@ const styles = StyleSheet.create({
     borderColor: lightColors.border,
     marginTop: common.containerMargin,
     minHeight: spacing.xl,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     padding: spacing.lg,
   },
