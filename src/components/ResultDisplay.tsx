@@ -1,18 +1,19 @@
 // Component to display the formatted result.
+import { useMemo } from 'react';
 import {
-  View, 
-  Text, 
-  StyleSheet 
+  View,
+  Text,
+  StyleSheet
 } from 'react-native';
 
 import { LineChart } from 'react-native-gifted-charts';
 
-import { 
+import {
   common,
-  lightColors,
-  spacing, 
+  spacing,
   typography,
 } from '@/src/theme/theme.ts';
+import { useTheme } from '@/src/theme/ThemeContext';
 
 import { 
   buildLineChartData,
@@ -39,6 +40,8 @@ export default function ResultDisplay({
   endYear,
   endYearHasError,
 }: ResultDisplayProps) {
+  const { colors } = useTheme();
+
   const result = (() => {
     // TODO: Use the ratio of inflation to compute the value between the two years 
     const convertedValue = convert(amount, startYear, endYear);
@@ -76,6 +79,29 @@ export default function ResultDisplay({
 
   const lineChartData = !hasError ? buildLineChartData(amount, startYear, endYear) : null;
 
+  const styles = useMemo(() => StyleSheet.create({
+    container: {
+      alignItems: 'center',
+      backgroundColor: colors.surface,
+      borderRadius: common.borderRadius,
+      borderWidth: common.borderWidth,
+      borderColor: colors.border,
+      marginTop: common.containerMargin,
+      minHeight: spacing.xl,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: spacing.lg,
+    },
+    errorContainer: {
+      borderColor: colors.errorBorder,
+      backgroundColor: colors.errorSurface,
+    },
+    infoContainer: {
+      borderColor: colors.infoBorder,
+      backgroundColor: colors.infoSurface,
+    },
+  }), [colors]);
+
   return (
     <>
       <HeaderText>Result:</HeaderText>
@@ -84,24 +110,21 @@ export default function ResultDisplay({
         hasError && styles.errorContainer,
         isInfo && styles.infoContainer,
       ]}>
-        {/* <Text style={styles.resultText}>
-          {resultBody}
-        </Text> */}
         {
-          resultIsLoading ? (<LoadingSpinner />) : 
+          resultIsLoading ? (<LoadingSpinner />) :
           (
             // TODO: Make this whole display prettier
             <>
             <ResultText
               hasError={hasError}
-              isInfo={isInfo} 
+              isInfo={isInfo}
               message={resultMessage}
             />
             {
               lineChartData !== null && (
                 <LineChart
-                  color={lightColors.accent}
-                  dataPointsColor={lightColors.accent}
+                  color={colors.accent}
+                  dataPointsColor={colors.accent}
                   data={lineChartData}
                 />
               )
@@ -125,8 +148,24 @@ function ResultText({
   isInfo,
   message,
 }: ResultTextProps) {
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    resultText: {
+      textAlign: 'center',
+      color: colors.textPrimary,
+      ...typography.result,
+    },
+    errorText: {
+      ...typography.body,
+    },
+    infoText: {
+      ...typography.body,
+    },
+  }), [colors]);
+
   return (
-    <Text 
+    <Text
       style={[
         styles.resultText,
         hasError && styles.errorText,
@@ -137,37 +176,3 @@ function ResultText({
     </Text>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: lightColors.surface,
-    borderRadius: common.borderRadius,
-    borderWidth: common.borderWidth,
-    borderColor: lightColors.border,
-    marginTop: common.containerMargin,
-    minHeight: spacing.xl,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: spacing.lg,
-  },
-  errorContainer: {
-    borderColor: lightColors.errorBorder,
-    backgroundColor: lightColors.errorSurface,
-  },
-  infoContainer: {
-    borderColor: lightColors.infoBorder,
-    backgroundColor: lightColors.infoSurface,
-  },
-  resultText: {
-    textAlign: 'center',
-    color: lightColors.textPrimary,
-    ...typography.result,
-  },
-  errorText: {
-    ...typography.body,
-  },
-  infoText: {
-    ...typography.body,
-  },
-});

@@ -5,7 +5,7 @@
   - used for start and end years
 */
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   StyleSheet,
@@ -16,8 +16,8 @@ import {
   common,
   spacing,
   typography,
-  lightColors
 } from "@/src/theme/theme.ts";
+import { useTheme } from "@/src/theme/ThemeContext";
 
 type Props = {
   hasError: boolean;
@@ -40,6 +40,7 @@ export default function YearSelector({
   min,
   max,
 }: Props) {
+  const { colors } = useTheme();
   const [ isFocused, setIsFocused ] = useState(false);
   // const [ hasError, setHasError ] = useState(false);
   const [ previousValue, setPreviousValue ] = useState(value);
@@ -91,8 +92,29 @@ export default function YearSelector({
 
   };
 
+  const styles = useMemo(() => StyleSheet.create({
+    yearInput: {
+      // TODO: Make the common input stylings between this and AmountInput some sort of mixin
+      borderColor: colors.border,
+      borderRadius: common.borderRadius,
+      borderWidth: common.borderWidth,
+      backgroundColor: colors.surface,
+      color: colors.textPrimary,
+      ...typography.input,
+      ...common.inputPadding,
+      width: '40%',
+      textAlign: 'center',
+    },
+    yearInputFocused: {
+      borderColor: colors.accent,
+    },
+    yearInputError: {
+      borderColor: colors.errorBorder,
+    }
+  }), [colors]);
+
   return (
-    <TextInput 
+    <TextInput
       style={[
         styles.yearInput,
         isFocused && styles.yearInputFocused,
@@ -106,24 +128,3 @@ export default function YearSelector({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  yearInput: {
-    // TODO: Make the common input stylings between this and AmountInput some sort of mixin
-    borderColor: lightColors.border,
-    borderRadius: common.borderRadius,
-    borderWidth: common.borderWidth,
-    backgroundColor: lightColors.surface,
-    color: lightColors.textPrimary,
-    ...typography.input,
-    ...common.inputPadding,
-    width: '40%',
-    textAlign: 'center',
-  },
-  yearInputFocused: {
-    borderColor: lightColors.accent,
-  },
-  yearInputError: {
-    borderColor: lightColors.errorBorder,
-  }
-});

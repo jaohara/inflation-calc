@@ -6,7 +6,7 @@
   - uses raw string for value that is parsed in lib/inflation.ts
 */
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import {
   StyleSheet,
@@ -17,8 +17,8 @@ import {
   common,
   spacing,
   typography,
-  lightColors
 } from "@/src/theme/theme.ts";
+import { useTheme } from "@/src/theme/ThemeContext";
 
 type Props = {
   hasError: boolean;
@@ -36,6 +36,7 @@ export default function AmountInput({
   setValue,
   value,
 }: Props) {
+  const { colors } = useTheme();
   const [ isFocused, setIsFocused ] = useState(false);
   // const [ hasError, setHasError ] = useState(false);
   const [ previousValue, setPreviousValue ] = useState(value);
@@ -76,8 +77,28 @@ export default function AmountInput({
     }
   };
 
+  const styles = useMemo(() => StyleSheet.create({
+    amountInput: {
+      borderRadius: common.borderRadius,
+      borderWidth: common.borderWidth,
+      borderColor: colors.border,
+      backgroundColor: colors.surface,
+      color: colors.textPrimary,
+      ...typography.input,
+      ...common.inputPadding,
+      textAlign: 'center',
+      width: '100%',
+    },
+    amountInputFocused: {
+      borderColor: colors.accent,
+    },
+    amountInputError: {
+      borderColor: colors.errorBorder,
+    }
+  }), [colors]);
+
   return (
-    <TextInput 
+    <TextInput
       style={[
         styles.amountInput,
         isFocused && styles.amountInputFocused,
@@ -91,23 +112,3 @@ export default function AmountInput({
     />
   );
 }
-
-const styles = StyleSheet.create({
-  amountInput: {
-    borderRadius: common.borderRadius,
-    borderWidth: common.borderWidth,
-    borderColor: lightColors.border,
-    backgroundColor: lightColors.surface,
-    color: lightColors.textPrimary,
-    ...typography.input,
-    ...common.inputPadding,
-    textAlign: 'center',
-    width: '100%',
-  },
-  amountInputFocused: {
-    borderColor: lightColors.accent,
-  },
-  amountInputError: {
-    borderColor: lightColors.errorBorder,
-  }
-});

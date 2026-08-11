@@ -1,24 +1,25 @@
 import { Text, StyleSheet} from "react-native";
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren, useMemo } from 'react';
 
-// TODO: Change import when light/dark selection is available
-import { lightColors, typography, spacing } from "@/src/theme/theme";
+import { typography, spacing } from "@/src/theme/theme";
+import { useTheme } from "@/src/theme/ThemeContext";
 
 export default function BodyText({
   children
 }: PropsWithChildren) {
+  const { colors } = useTheme();
+
+  const styles = useMemo(() => StyleSheet.create({
+    text: {
+      ...typography.body,
+      color: colors.textPrimary,
+      marginTop: spacing.md,
+    }
+  }), [colors]);
+
   return (
     <Text style={styles.text}>
       {children}
     </Text>
   )
 };
-
-const styles = StyleSheet.create({
-  text: {
-    ...typography.body,
-    // TODO: change when light/dark mode is available
-    color: lightColors.textPrimary,
-    marginTop: spacing.md,
-  }
-});

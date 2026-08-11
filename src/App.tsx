@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
@@ -16,13 +16,11 @@ import BodyText from '@/src/components/BodyText';
 import YearSelector from './components/YearSelector';
 import AmountInput from './components/AmountInput';
 
-// TODO: Change color import when light/dark theming is working
 import {
   common,
-  lightColors,
-  spacing,
   typography,
 } from '@/src/theme/theme';
+import { ThemeProvider, useTheme } from '@/src/theme/ThemeContext';
 
 import {
   // MIN_INFLATION_YEAR,
@@ -38,7 +36,9 @@ const MIN_INFLATION_YEAR = parseInt(YEAR_RANGE[0]);
 const MAX_INFLATION_YEAR = parseInt(YEAR_RANGE[YEAR_RANGE.length - 1]);
 
 
-export default function App() {
+function AppContent() {
+  const { colors } = useTheme();
+
   const [ startYear, setStartYear ] = useState(String(DEFAULT_YEAR));
   const [ endYear, setEndYear ] = useState(String(MAX_INFLATION_YEAR));
   const [ amount, setAmount ] = useState("1.00");
@@ -47,12 +47,50 @@ export default function App() {
   const [ startYearInputHasError, setStartYearInputHasError ] = useState(false);
   const [ endYearInputHasError, setEndYearInputHasError ] = useState(false);
   const [ amountInputHasError, setAmountInputHasError ] = useState(false);
-  
+
   const [ loaded, error ] = useFonts({
     IBMPlexMono_500Medium,
     Literata_400Regular,
     Literata_600SemiBold,
   });
+
+  const styles = useMemo(() => StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      padding: common.padding,
+      // paddingTop: spacing.xl,
+    },
+    inputContainer: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginBottom: common.containerMargin,
+      marginTop: common.containerMargin,
+    },
+    inputWrapper: {
+      ...common.flex,
+      width: '90%',
+    },
+    amountInputContainer: {
+      // flexDirection: 'row',
+      // alignItems: 'center',
+      // justifyContent: 'space-between'
+      ...common.flex,
+    },
+    yearInputsContainer: {
+      // flexDirection: 'row',
+      // alignItems: 'center',
+      // justifyContent: 'space-between',
+      ...common.flex,
+    },
+    yearInputsContainerLabel: {
+      ...typography.label,
+      color: colors.accent,
+    }
+  }), [colors]);
 
   /* 
     Continue here - look into that SplashScreen.preventAutoHideAsync()
@@ -126,41 +164,10 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // TODO: Change when light/dark mode is available
-    backgroundColor: lightColors.background,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-    padding: common.padding,
-    // paddingTop: spacing.xl,
-  },
-  inputContainer: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: common.containerMargin,
-    marginTop: common.containerMargin,
-  },
-  inputWrapper: {
-    ...common.flex,
-    width: '90%',
-  },
-  amountInputContainer: {
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between'
-    ...common.flex,
-  },
-  yearInputsContainer: {
-    // flexDirection: 'row',
-    // alignItems: 'center',
-    // justifyContent: 'space-between',
-    ...common.flex,
-  },
-  yearInputsContainerLabel: {
-    ...typography.label,
-    color: lightColors.accent,
-  }
-});
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
+  );
+}

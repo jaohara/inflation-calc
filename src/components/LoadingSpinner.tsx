@@ -3,9 +3,10 @@ import { Animated, Easing } from 'react-native';
 
 import { FontAwesome6 } from '@react-native-vector-icons/fontawesome6';
 import { SPINNER_SIZE } from '@/src/constants';
-import { lightColors } from '@/src/theme/theme';
+import { useTheme } from '@/src/theme/ThemeContext';
 
 export default function LoadingSpinner() {
+  const { colors } = useTheme();
   const spin = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -39,7 +40,7 @@ export default function LoadingSpinner() {
         name="spinner" 
         iconStyle="solid"
         size={SPINNER_SIZE}
-        color={lightColors.accent} />
+        color={colors.accent} />
     </Animated.View>
   )
 }
