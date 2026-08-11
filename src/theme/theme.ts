@@ -85,18 +85,20 @@ export const spacing = {
 } as const;
 
 export const typography = {
-  header: { 
-    fontFamily: 'Literata_600SemiBold', 
-    fontSize: 24, 
+  header: {
+    fontFamily: 'IBMPlexSans_600SemiBold',
+    fontSize: 24,
     lineHeight: 32
   },
   body: { 
-    fontFamily: 'Literata_400Regular', 
+    // fontFamily: 'Literata_400Regular', 
+    fontFamily: 'IBMPlexSans_400Regular', 
     fontSize: 16, 
-    lineHeight: 24 
+    lineHeight: 22 
   },
   label: { 
-    fontFamily: 'Literata_600SemiBold', 
+    // fontFamily: 'Literata_600SemiBold', 
+    fontFamily: 'IBMPlexSans_600SemiBold', 
     fontSize: 13 
   },
   input: {
@@ -105,7 +107,7 @@ export const typography = {
   },
   result: { 
     fontFamily: 'IBMPlexMono_500Medium', 
-    fontSize: 32 
+    fontSize: 22 
   },
 } as const;
 

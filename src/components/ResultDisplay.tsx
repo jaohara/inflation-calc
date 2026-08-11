@@ -1,9 +1,11 @@
 // Component to display the formatted result.
 import { useMemo } from 'react';
+
 import {
   View,
   Text,
-  StyleSheet
+  StyleSheet,
+  useWindowDimensions,
 } from 'react-native';
 
 import { 
@@ -43,6 +45,15 @@ export default function ResultDisplay({
   endYearHasError,
 }: ResultDisplayProps) {
   const { colors } = useTheme();
+
+  const containerXPadding = spacing.xs;
+  const chartXPaddingOffset = containerXPadding * 2;
+  const parentXPadding = common.padding;
+  const chartYAxisLabelsWidth = 28;
+  const { width } = useWindowDimensions();
+  // width - (chartXPaddingOffset * 2) - (parentXPadding * 2) - chartYAxisLabelsWidth; 
+  const chartWidth = 
+    width - (containerXPadding * 2) - (parentXPadding * 2) - chartYAxisLabelsWidth; 
 
   const result = (() => {
     // TODO: Use the ratio of inflation to compute the value between the two years 
@@ -92,7 +103,9 @@ export default function ResultDisplay({
       minHeight: spacing.xl,
       flexDirection: 'column',
       justifyContent: 'center',
-      padding: spacing.lg,
+      padding: spacing.sm,
+      paddingLeft: containerXPadding,
+      paddingRight: containerXPadding,
     },
     errorContainer: {
       borderColor: colors.errorBorder,
@@ -106,7 +119,7 @@ export default function ResultDisplay({
 
   return (
     <>
-      <HeaderText>Result:</HeaderText>
+      <HeaderText>Result</HeaderText>
       <View style={[
         styles.container,
         hasError && styles.errorContainer,
@@ -124,17 +137,38 @@ export default function ResultDisplay({
             />
             {
               lineChartData !== null && (
+                // TODO: Clean up this and work on Y Axis labeling (truncate values like 1200 -> 1.2k)
                 <LineChart
+                  areaChart
                   color={colors.accent}
+                  startFillColor={colors.accent}
+                  endFillColor={colors.background}
+                  startOpacity={0.3}
+                  endOpacity={0}
                   curved
                   dataPointsRadius={3}
                   dataPointsColor={colors.accent}
                   data={lineChartData}
                   hideOrigin
+                  spacing={28}
+                  initialSpacing={6}
+                  endSpacing={0}
                   noOfSections={5}
                   rulesColor={colors.border}
                   xAxisColor={colors.border}
                   yAxisColor={colors.border}
+                  yAxisLabelWidth={24}
+                  yAxisTextStyle={{ 
+                    fontFamily: 'IBMPlexMono_500Medium', 
+                    fontSize: 8, 
+                    color: colors.textSecondary 
+                  }}
+                  xAxisLabelTextStyle={{ 
+                    fontSize: 8, 
+                    color: colors.textSecondary 
+                  }}
+                  rotateLabel
+                  width={chartWidth}
                 />
               )
             }
@@ -164,6 +198,7 @@ function ResultText({
       textAlign: 'center',
       color: colors.textPrimary,
       ...typography.result,
+      padding: spacing.sm,
     },
     errorText: {
       ...typography.body,

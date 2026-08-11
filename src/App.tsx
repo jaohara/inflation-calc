@@ -6,6 +6,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import { useFonts } from 'expo-font';
 import { IBMPlexMono_500Medium } from '@expo-google-fonts/ibm-plex-mono';
+import { IBMPlexSans_400Regular, IBMPlexSans_600SemiBold } from '@expo-google-fonts/ibm-plex-sans';
 import { Literata_400Regular, Literata_600SemiBold } from '@expo-google-fonts/literata';
 
 import cpiData from '@/data/cpi.json';
@@ -50,8 +51,10 @@ function AppContent() {
 
   const [ loaded, error ] = useFonts({
     IBMPlexMono_500Medium,
-    Literata_400Regular,
-    Literata_600SemiBold,
+    IBMPlexSans_400Regular, 
+    IBMPlexSans_600SemiBold,
+    // Literata_400Regular,
+    // Literata_600SemiBold,
   });
 
   const styles = useMemo(() => StyleSheet.create({
@@ -105,9 +108,9 @@ function AppContent() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <HeaderText>
+        {/* <HeaderText>
           Input:
-        </HeaderText>
+        </HeaderText> */}
 
         <View style={[styles.inputContainer, styles.amountInputContainer]}>
           <AppIcon name="dollar-sign" />
