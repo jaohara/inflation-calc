@@ -1,7 +1,5 @@
 TODO:
 
-- Make hook for handling light/dark modes and dynamic color palettes
-- Add basic react-native-gifted-charts display to results
 - Change main font to a better, sans-serif font
 - Handle non numeric chars in AmountInput (math symbols)
   - Simply remove?
@@ -16,6 +14,8 @@ TODO:
 - Add a history display for 
 
 DONE:
+- Add basic react-native-gifted-charts display to results
+- Make hook for handling light/dark modes and dynamic color palettes
 - Pass error state props into YearInput and Amount inputs
 - Make results show an message besides NaN when there is something causing an error
 - Unify width of input containers

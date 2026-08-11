@@ -6,7 +6,9 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { LineChart } from 'react-native-gifted-charts';
+import { 
+  LineChart 
+} from 'react-native-gifted-charts';
 
 import {
   common,
@@ -124,8 +126,15 @@ export default function ResultDisplay({
               lineChartData !== null && (
                 <LineChart
                   color={colors.accent}
+                  curved
+                  dataPointsRadius={3}
                   dataPointsColor={colors.accent}
                   data={lineChartData}
+                  hideOrigin
+                  noOfSections={5}
+                  rulesColor={colors.border}
+                  xAxisColor={colors.border}
+                  yAxisColor={colors.border}
                 />
               )
             }
